@@ -46,6 +46,12 @@ library(MASS)
 library(plm)
 library(rms)
 
+library(keras)
+library(mlbench)
+library(dplyr)
+library(magrittr)
+library(neuralnet)
+
 
 require(rJava)
 options(java.parameters = "-Xmx50g")     # or 8g, or larger than this, ...
@@ -54,12 +60,8 @@ set_bart_machine_num_cores(30)
 ```
 
 
-## Rare Events
 
-So since changes in regime can be rare, how well does BART estimate rare events? We can test that!
-
-
-## Ideal Data
+# Ideal Data
 
 
 Let's start by creating a baseline so we can compare the models before moving into rare events. We will start by generating some data.
@@ -89,7 +91,7 @@ df <- data.frame(y=y,x1=x1,x2=x2)
 
 ```
 
-### Logit
+## Logit
 
 Let's test the Logit Model
 
@@ -100,7 +102,7 @@ summary(m1.glm)
 ```
 No surprises here. the Logit is more or less accurite. Now let's look at the Logit's confusion Matrix.
 
-#### Accuracy
+### Accuracy
 
 To measure the accuracy of a model we can use a Confusion Matrix. Basically this tells us how many predictions were correct and how many were false.
 
@@ -131,7 +133,7 @@ bm <- bartMachineCV(Xy = df)
 The hyperparameters selected by this BART-CV method are k = `r bm$k` and the number of trees = `r bm$num_trees`
 
 
-#### Accuracy
+### Accuracy
 
 Confusion Matrix for the BART model
 
@@ -141,7 +143,36 @@ bm$confusion_matrix
 
 Here we can see a slight improvement from the Logistic Regression. 
 
-## Hard Cases
+## Neural Network
+
+Now let's compare a Neural Network with Resilient Backpropagation.
+```{r}
+n <- neuralnet(y ~ .,
+               data = df,
+               hidden = 5)
+```
+
+```{r}
+plot(n)
+```
+### Accuracy 
+
+
+
+```{r}
+nn.results <- compute(n, df)
+results <- data.frame(actual = as.numeric(df$y), prediction = nn.results$net.result[,2])
+
+
+
+roundedresults<-sapply(results,round,digits=0)
+roundedresultsdf=data.frame(roundedresults)
+attach(roundedresultsdf)
+table(actual,prediction)
+```
+
+
+# Hard Cases
 
 Now that we can see how well these models work in ideal environments, let's see what happens.
 
@@ -166,7 +197,7 @@ How rare are 0s in this function? The zeros make up about `r (length(df2$y[which
 
 
 
-### Logit
+## Logit
 
 ```{r}
 m2.glm <- glm(y~., data = df2,family="binomial")
@@ -182,7 +213,7 @@ m2.re <-relogit(y~.,data=df2)
 confusion_matrix(m2.re)
 ```
 
-#### Accuracy
+### Accuracy
 
 Let's try the Confusion Matrix for the in sample fit once again.
 
@@ -196,7 +227,7 @@ ConfusionMatrix(estimatedResponses,df2$y)
 The model did a great job at predicting 1s but a terrible job at predicting 0s. The model may give an impression that it was accurate, since it did a very good job with the 1s, but overall its not useful since it was basically choosing 1 in `r n-1` cases. This is just for the in-sample data. We can expect out-of-sample predictions to be much worse. 
 
 
-### BART
+## BART
 
 Let's start with BART-CV without any tuning for rare events and see how well it performs.
 
@@ -208,7 +239,7 @@ bm2 <- bartMachineCV(Xy = df2)
 
 The hyperparameters selected by this BART-CV method are k = `r bm2$k` and the number of trees = `r bm2$num_trees`
 
-#### Accuracy
+### Accuracy
 
 Confusion Matrix for the BART model
 
@@ -218,7 +249,7 @@ bm2$confusion_matrix
 
 The results here are not  too surprising. This model also predicted 1 for every case. Its a good guess since most of the data are 1s and it was off only `r .121 *100`% of the time. Yet, this is still not as useful of a model.
 
-### Tuned BART
+## Tuned BART
 
 BART lets us change the threshold for classification which can let us tweak the model for rare events.
 
@@ -252,3 +283,32 @@ bm4$confusion_matrix
 ```
 
 Here the model predicted most of the 0s correctly but incorrectly assigned some 1s as 0s
+
+
+## Neural Network
+
+Now let's compare a Neural Network with Resilient Backpropagation.
+```{r}
+n <- neuralnet(y ~ .,
+               data = df,
+               hidden = 5)
+```
+
+```{r}
+plot(n)
+```
+### Accuracy 
+
+
+
+```{r}
+nn.results <- compute(n, df)
+results <- data.frame(actual = as.numeric(df$y), prediction = nn.results$net.result[,2])
+
+
+
+roundedresults<-sapply(results,round,digits=0)
+roundedresultsdf=data.frame(roundedresults)
+attach(roundedresultsdf)
+table(actual,prediction)
+```
