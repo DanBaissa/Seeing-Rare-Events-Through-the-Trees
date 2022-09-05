@@ -1,0 +1,254 @@
+---
+title: "Seeing Rare Events Through the Trees"
+author: "Daniel K Baissa"
+date: "4/14/2022"
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(MLmetrics)
+library(stargazer)
+#library(scatterplot3d)
+# install.packages("clusterSEs")
+library(clusterSEs)
+# install.packages("Zelig")
+# library(Zelig)
+# library(BNN)
+#install.packages("margins")
+library(DataCombine)
+library(Hmisc)
+library(sandwich)
+library(scales)
+library(tidyverse)
+library(sjPlot)
+library(mediation)
+library(ggpubr)
+library(corrr)
+library(Zelig)
+library(lmtest)
+library(foreign)
+library(pcse)
+library(car)
+library(regclass)
+
+library(Matrix)
+library(robust)
+#library(arm)
+library(mgcv)
+library(splines)
+#library(plotrix)
+library(MASS)
+#library(calibrate)
+library(plm)
+library(rms)
+
+
+require(rJava)
+options(java.parameters = "-Xmx50g")     # or 8g, or larger than this, ...
+require(bartMachine)
+set_bart_machine_num_cores(30)
+```
+
+
+## Rare Events
+
+So since changes in regime can be rare, how well does BART estimate rare events? We can test that!
+
+
+## Ideal Data
+
+
+Let's start by creating a baseline so we can compare the models before moving into rare events. We will start by generating some data.
+
+The functional form of the data will be where y is distributed binomial with probability 
+
+$$ \frac{1}{1 + e^{-z}}$$
+
+and where 
+
+$$ z = -1 + -1\beta_1 + 2\beta_2 $$
+
+So let's generate the data:
+
+```{r}
+
+set.seed(02142)
+x1 <- rnorm(1000) # Variable 1
+x2 <- rnorm(1000) # Variable 2
+
+z <- -1 + -1*x1 + 2*x2 # linear combination with a constant
+pr <- 1/(1+exp(-z)) # pass through an inv-logit function
+
+y <- as.factor(rbinom(1000,1,pr)) 
+
+df <- data.frame(y=y,x1=x1,x2=x2)
+
+```
+
+### Logit
+
+Let's test the Logit Model
+
+```{r}
+m1.glm <- glm(y~x1+x2,data=df,family="binomial")
+
+summary(m1.glm)
+```
+No surprises here. the Logit is more or less accurite. Now let's look at the Logit's confusion Matrix.
+
+#### Accuracy
+
+To measure the accuracy of a model we can use a Confusion Matrix. Basically this tells us how many predictions were correct and how many were false.
+
+```{r}
+confusion_matrix(m1.glm)
+```
+
+In this Logit, we predicted 0 correctly 549 times and predicted 0 118 times when the true answer was 1. On the other side we predicted 1 correctly 249 times and predicted a 1 when the true answer was 0 84 times.
+
+Remember, this is an ideal case with no iterations and an n of 1000. The model was correct `r 118 + 84` times or `r (1-((118 + 84)/1000)) * 100`% of the time.
+
+```{r}
+df$y <- as.numeric(df$y)-1
+m1.re <-relogit(y~x1+x2,data=df)
+confusion_matrix(m1.re)
+```
+
+
+## Baysian Additive Regression Trees
+
+Here we will use the BART-CV model which builds a model by cross-validating over a number of hyperparameter choices. 
+
+```{r results = FALSE}
+df$y <- as.factor(df$y)
+bm <- bartMachineCV(Xy = df)
+```
+
+The hyperparameters selected by this BART-CV method are k = `r bm$k` and the number of trees = `r bm$num_trees`
+
+
+#### Accuracy
+
+Confusion Matrix for the BART model
+
+```{r}
+bm$confusion_matrix
+```
+
+Here we can see a slight improvement from the Logistic Regression. 
+
+## Hard Cases
+
+Now that we can see how well these models work in ideal environments, let's see what happens.
+
+Here $$z = 2 + tan\bigl(\beta_1 ^ {e^{\pi}} * sin(\beta_2)\bigr)*log\biggl( \frac{\beta_3}{sin(\beta_4)}\biggr) * \beta_5 ^ {e ^ {\beta_5}}  $$
+
+This is a much more complex model that the simple function that we normally aproximate in political science, yet it is much more likely to represent how a complex dynamic system works in the real world.
+
+```{r}
+set.seed(11)
+n  = 800 
+p = 20 ##15 useless predictors 
+X = data.frame(matrix(runif(n * p), ncol = p))
+z = 2 + tan((X[ ,1]^exp(pi)) * sin(X[,2]))*log((X[,3]/sin(X[ ,4]))) * X[,5]^exp(X[,5])
+
+pr = 1/(1+exp(-z))         # pass through an inv-logit function
+y = as.factor(rbinom(n,1,pr))    
+
+df2 <- cbind(y, X)
+```
+
+How rare are 0s in this function? The zeros make up about `r (length(df2$y[which(df2$y == 0)])/length(df2$y))*100`% of the data
+
+
+
+### Logit
+
+```{r}
+m2.glm <- glm(y~., data = df2,family="binomial")
+confusion_matrix(m2.glm)
+
+```
+
+It gives us statistically significant results... but the model here for only 1 out of the 5 variables we specified as causing y.
+
+```{r}
+df2$y <- as.numeric(df2$y)-1
+m2.re <-relogit(y~.,data=df2)
+confusion_matrix(m2.re)
+```
+
+#### Accuracy
+
+Let's try the Confusion Matrix for the in sample fit once again.
+
+
+```{r}
+estimatedResponses <- ifelse(m2.glm$fitted.values<0.5, 0, 1)
+
+ConfusionMatrix(estimatedResponses,df2$y)
+```
+
+The model did a great job at predicting 1s but a terrible job at predicting 0s. The model may give an impression that it was accurate, since it did a very good job with the 1s, but overall its not useful since it was basically choosing 1 in `r n-1` cases. This is just for the in-sample data. We can expect out-of-sample predictions to be much worse. 
+
+
+### BART
+
+Let's start with BART-CV without any tuning for rare events and see how well it performs.
+
+```{r results = FALSE}
+df2 $y <- as.factor(df2$y)
+
+bm2 <- bartMachineCV(Xy = df2)
+```
+
+The hyperparameters selected by this BART-CV method are k = `r bm2$k` and the number of trees = `r bm2$num_trees`
+
+#### Accuracy
+
+Confusion Matrix for the BART model
+
+```{r}
+bm2$confusion_matrix
+```
+
+The results here are not  too surprising. This model also predicted 1 for every case. Its a good guess since most of the data are 1s and it was off only `r .121 *100`% of the time. Yet, this is still not as useful of a model.
+
+### Tuned BART
+
+BART lets us change the threshold for classification which can let us tweak the model for rare events.
+
+```{r results = FALSE}
+
+bm3 <- bartMachineCV(Xy = df2, prob_rule_class = .1)
+
+```
+
+The hyperparameters selected by this BART-CV method are k = `r bm3$k` and the number of trees = `r bm3$num_trees`
+
+
+```{r}
+bm3$confusion_matrix
+```
+
+
+Now the model fits the data much better overall. It missed approximately 1/2 of the 0s as apposed to 100% of them from the logit.
+
+
+```{r results = FALSE}
+
+bm4 <- bartMachineCV(Xy = df2, prob_rule_class = .15)
+```
+
+The hyperparameters selected by this BART-CV method are k = `r bm4$k` and the number of trees = `r bm4$num_trees`
+
+```{r}
+bm4$confusion_matrix
+
+```
+
+Here the model predicted most of the 0s correctly but incorrectly assigned some 1s as 0s
