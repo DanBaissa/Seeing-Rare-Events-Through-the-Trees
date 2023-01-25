@@ -28,7 +28,7 @@ library(sjPlot)
 library(mediation)
 library(ggpubr)
 library(corrr)
-library(Zelig)
+# library(Zelig)
 library(lmtest)
 library(foreign)
 library(pcse)
@@ -178,7 +178,7 @@ Now that we can see how well these models work in ideal environments, let's see 
 
 Here $$z = 2 + tan\bigl(\beta_1 ^ {e^{\pi}} * sin(\beta_2)\bigr)*log\biggl( \frac{\beta_3}{sin(\beta_4)}\biggr) * \beta_5 ^ {e ^ {\beta_5}}  $$
 
-This is a much more complex model that the simple function that we normally aproximate in political science, yet it is much more likely to represent how a complex dynamic system works in the real world.
+This is a much more complex model that the simple function that we normally approximate in political science, yet it is much more likely to represent how a complex dynamic system works in the real world.
 
 ```{r}
 set.seed(11)
@@ -279,7 +279,6 @@ The hyperparameters selected by this BART-CV method are k = `r bm4$k` and the nu
 
 ```{r}
 bm4$confusion_matrix
-
 ```
 
 Here the model predicted most of the 0s correctly but incorrectly assigned some 1s as 0s
@@ -309,6 +308,6 @@ results <- data.frame(actual = as.numeric(df$y), prediction = nn.results$net.res
 
 roundedresults<-sapply(results,round,digits=0)
 roundedresultsdf=data.frame(roundedresults)
-attach(roundedresultsdf)
-table(actual,prediction)
+# attach(roundedresultsdf)
+as.data.frame.matrix(table(actual,prediction))
 ```
