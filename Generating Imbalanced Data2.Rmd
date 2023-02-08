@@ -310,7 +310,7 @@ confusion_matrix(m2.glm)
 require(rJava)
 options(java.parameters = "-Xmx50g")     # or 8g, or larger than this, ...
 require(bartMachine)
-set_bart_machine_num_cores(30)
+set_bart_machine_num_cores(8)
 ```
 
 ```{r}
