@@ -1,0 +1,434 @@
+---
+title: "Chat GPT Models"
+author: "Daniel K Baissa"
+date: "2023-02-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Create Random Varaibles
+
+```{r}
+# Load libraries
+library(tidyverse)
+library(regclass)
+
+# Generate sample data
+set.seed(123)
+n = 1000
+beta1 = rnorm(n)
+beta2 = rnorm(n)
+beta3 = rnorm(n)
+beta4 = rnorm(n)
+beta5 = rnorm(n)
+
+X <- cbind(beta1, beta2, beta3, beta4, beta5)
+```
+
+
+## Randomly generated Equations
+
+```{r}
+
+
+# Calculate z1
+z1 = 2 + sin(beta1 * pi) * log(beta2 + exp(beta3)) + cos(beta4) ^ (exp(beta5)) + rnorm(n)
+pr1 = 1 / (1 + exp(-z1))
+y1 = (rbinom(n,1,pr1))
+y1.1 = (rbinom(n,1,pr1))
+
+
+# Calculate z2
+z2 = 3 + tan(beta1 + pi) * log(beta2 ^ (exp(beta3))) * sin(beta4 + beta5)+ rnorm(n)
+pr2 = 1 / (1 + exp(-z2))
+y2 = (rbinom(n,1,pr2))
+y2.1 = (rbinom(n,1,pr2))
+
+# Calculate z3
+z3 = 4 + cos(beta1 * pi) ^ (log(beta2) * exp(beta3)) * log(beta4 + exp(beta5)) ^ (sin(beta1 + beta5) / pi)+ rnorm(n)
+pr3 = 1 / (1 + exp(-z3))
+y3 = (rbinom(n,1,pr3))
+y3.1 = (rbinom(n,1,pr3))
+
+# Calculate z4
+z4 = 5 + cos(beta1) * log(beta2 + exp(beta3)) ^ (sin(beta4) * exp(beta5))+ rnorm(n)
+pr4 = 1 / (1 + exp(-z4))
+y4 = (rbinom(n,1,pr4))
+y4.1 = (rbinom(n,1,pr4))
+
+# Calculate z5
+z5 = 6 + sin(beta1 + pi) * log(beta2 ^ (exp(beta3))) + cos(beta4) * exp(beta5)+ rnorm(n)
+pr5 = 1 / (1 + exp(-z5))
+y5 = (rbinom(n,1,pr5))
+
+# Calculate z6
+z6 = 7 + cos(beta1) * log(beta2 + exp(beta3)) + sin(beta4) ^ (exp(beta5))+ rnorm(n)
+pr6 = 1 / (1 + exp(-z6))
+y6 = (rbinom(n,1,pr6))
+
+# Calculate z7
+z7 = 8 + sin(beta1) * log(beta2 + exp(beta3)) + cos(beta4) * exp(beta5)+ rnorm(n)
+pr7 = 1 / (1 + exp(-z7))
+y7 = (rbinom(n,1,pr7))
+
+# Calculate z8
+z8 = 9 + tan(beta1) * log(beta2 ^ (exp(beta3))) * cos(beta4 + beta5)+ rnorm(n)
+pr8 = 1 / (1 + exp(-z8))
+y8 = (rbinom(n,1,pr8))
+
+z9 = 10 + cos(beta1 * pi) ^ (log(beta2) * exp(beta3)) * sin(beta4 + beta5) ^ (log(beta1) + exp(beta5))+ rnorm(n)
+pr9 = 1 / (1 + exp(-z9))
+y9 = (rbinom(n,1,pr9))
+
+# Calculate z10
+z10 = 11 + sin(beta1) * log(beta2 + exp(beta3)) + cos(beta4) ^ (exp(beta5))+ rnorm(n)
+pr10 = 1 / (1 + exp(-z10))
+y10 = (rbinom(n,1,pr10))
+
+# Calculate z11
+z11 = 12 + log(beta1 + exp(beta2)) * sin(beta3) + cos(beta4) ^ (log(beta5))+ rnorm(n)
+pr11 = 1 / (1 + exp(-z11))
+y11 = (rbinom(n,1,pr11))
+
+# Calculate z12
+z12 = 13 + cos(beta1) ^ (exp(beta2)) * log(beta3 + exp(beta4)) + sin(beta5)+ rnorm(n)
+pr12 = 1 / (1 + exp(-z12))
+y12 = (rbinom(n,1,pr12))
+
+# Calculate z13
+z13 = 14 + sin(beta1) * exp(beta2) * log(beta3) + cos(beta4) ^ (log(beta5))+ rnorm(n)
+pr13 = 1 / (1 + exp(-z13))
+y13 = (rbinom(n,1,pr13))
+
+# Calculate z14
+z14 = 15 + log(beta1) * exp(beta2) + sin(beta3) * cos(beta4) ^ (log(beta5))+ rnorm(n)
+pr14 = 1 / (1 + exp(-z14))
+y14 = (rbinom(n,1,pr14))
+
+# Calculate z15
+z15 = 16 + sin(beta1) * log(beta2) * cos(beta3) ^ (exp(beta4)) + log(beta5)+ rnorm(n)
+pr15 = 1 / (1 + exp(-z15))
+y15 = (rbinom(n,1,pr15))
+
+# Calculate z16
+z16 = 17 + cos(beta1) * log(beta2 + exp(beta3)) * sin(beta4) + exp(beta5)+ rnorm(n)
+pr16 = 1 / (1 + exp(-z16))
+y16 = (rbinom(n,1,pr16))
+
+# Calculate z17
+z17 = 18 + cos(beta1) ^ (exp(beta2)) * sin(beta3) * log(beta4 + exp(beta5))+ rnorm(n)
+pr17 = 1 / (1 + exp(-z17))
+y17 = (rbinom(n,1,pr17))
+
+# Calculate z18
+z18 = 19 + log(beta1) * sin(beta2) * cos(beta3) + exp(beta4) ^ (log(beta5))+ rnorm(n)
+pr18 = 1 / (1 + exp(-z18))
+y18 = (rbinom(n,1,pr18))
+
+# Calculate z19
+z19 = 20 + cos(beta1) * exp(beta2) + log(beta3) * sin(beta4) ^ (log(beta5))+ rnorm(n)
+pr19 = 1 / (1 + exp(-z19))
+y19 = (rbinom(n,1,pr19))
+
+# Calculate z20
+z20 = 21 + sin(beta1) * exp(beta2) * cos(beta3) + log(beta4) ^ (exp(beta5))+ rnorm(n)
+pr20 = 1 / (1 + exp(-z20))
+y20 = (rbinom(n,1,pr20))
+
+# Calculate z21
+z21 = 22 + cos(beta1) ^ (log(beta2)) * log(beta3 + exp(beta4)) + sin(beta5)+ rnorm(n)
+pr21 = 1 / (1 + exp(-z21))
+y21 = (rbinom(n,1,pr21))
+
+# Calculate z22
+z22 = 23 + log(beta1) * cos(beta2) * sin(beta3) ^ (exp(beta4)) + log(beta5)+ rnorm(n)
+pr22 = 1 / (1 + exp(-z22))
+y22 = (rbinom(n,1,pr22))
+
+# Calculate z23
+z23 = 24 + log(beta1) * sin(beta2) * cos(beta3) ^ (log(beta4)) + exp(beta5)+ rnorm(n)
+pr23 = 1 / (1 + exp(-z23))
+y23 = (rbinom(n,1,pr23))
+
+# Calculate z24
+z24 = 25 + sin(beta1) * log(beta2 + exp(beta3)) * cos(beta4) + exp(beta5)+ rnorm(n)
+pr24 = 1 / (1 + exp(-z24))
+y24 = (rbinom(n,1,pr24))
+
+# Calculate z25
+z25 = 26 + cos(beta1) * sin(beta2) * log(beta3) + exp(beta4) ^ (log(beta5))+ rnorm(n)
+pr25 = 1 / (1 + exp(-z25))
+y25 = (rbinom(n,1,pr25))
+
+# Calculate z26
+z26 = 27 + log(beta1 + exp(beta2)) * sin(beta3) * cos(beta4) ^ (log(beta5))+ rnorm(n)
+pr26 = 1 / (1 + exp(-z26))
+y26 = (rbinom(n,1,pr26))
+
+# Calculate z27
+z27 = 28 + cos(beta1) * exp(beta2) * sin(beta3) + log(beta4) ^ (exp(beta5))+ rnorm(n)
+pr27 = 1 / (1 + exp(-z27))
+y27 = (rbinom(n,1,pr27))
+
+# Calculate z28
+z28 = 29 + sin(beta1) * log(beta2) * cos(beta3) ^ (exp(beta4)) + log(beta5)+ rnorm(n)
+pr28 = 1 / (1 + exp(-z28))
+y28 = (rbinom(n,1,pr28))
+
+# Calculate z29
+z29 = 30 + log(beta1) * cos(beta2) * sin(beta3) ^ (log(beta4)) + exp(beta5)+ rnorm(n)
+pr29 = 1 / (1 + exp(-z29))
+y29 = (rbinom(n,1,pr29))
+
+# Calculate z30
+z30 = 31 + sin(beta1) * cos(beta2) * log(beta3) + exp(beta4) ^ (log(beta5))+ rnorm(n)
+pr30 = 1 / (1 + exp(-z30))
+y30 = (rbinom(n,1,pr30))
+
+# Calculate z31
+z31 = 32 + log(beta1 + sin(beta2)) * cos(beta3) * exp(beta4) ^ (log(beta5))+ rnorm(n)
+pr31 = 1 / (1 + exp(-z31))
+y31 = (rbinom(n,1,pr31))
+
+# Calculate z32
+z32 = 33 + cos(beta1) * log(beta2) * sin(beta3) + exp(beta4) ^ (log(beta5))+ rnorm(n)
+pr32 = 1 / (1 + exp(-z32))
+y32 = (rbinom(n,1,pr32))
+
+# Calculate z33
+z33 = 34 + sin(beta1) * cos(beta2) * exp(beta3) + log(beta4) ^ (exp(beta5))+ rnorm(n)
+pr33 = 1 / (1 + exp(-z33))
+y33 = (rbinom(n,1,pr33))
+
+# Calculate z34
+z34 = 35 + log(beta1) * sin(beta2) * cos(beta3) ^ (exp(beta4)) + log(beta5)+ rnorm(n)
+pr34 = 1 / (1 + exp(-z34))
+y34 = (rbinom(n,1,pr34))
+
+# Calculate z35
+z35 = 36 + cos(beta1) * log(beta2) * sin(beta3) + exp(beta4) ^ (log(beta5))+ rnorm(n)
+pr35 = 1 / (1 + exp(-z35))
+y35 = (rbinom(n,1,pr35))
+
+# Calculate z36
+z36 = 37 + sin(beta1) * cos(beta2) * log(beta3) + exp(beta4) ^ (log(beta5))+ rnorm(n)
+pr36 = 1 / (1 + exp(-z36))
+y36 = (rbinom(n,1,pr36))
+
+# Calculate z37
+z37 = 38 + log(beta1 + sin(beta2)) * cos(beta3) * exp(beta4) ^ (log(beta5))+ rnorm(n)
+pr37 = 1 / (1 + exp(-z37))
+y37 = (rbinom(n,1,pr37))
+
+# Calculate z38
+z38 = 39 + cos(beta1) * log(beta2) * sin(beta3) + exp(beta4) ^ (log(beta5))+ rnorm(n)
+pr38 = 1 / (1 + exp(-z38))
+y38 = (rbinom(n,1,pr38))
+
+# Calculate z39
+z39 = 40 + sin(beta1) * cos(beta2) * exp(beta3) + log(beta4) ^ (exp(beta5))+ rnorm(n)
+pr39 = 1 / (1 + exp(-z39))
+y39 = (rbinom(n,1,pr39))
+
+# Calculate z40
+z40 = 41 + log(beta1) * sin(beta2) * cos(beta3) ^ (exp(beta4)) + log(beta5)+ rnorm(n)
+pr40 = 1 / (1 + exp(-z40))
+y40 = (rbinom(n,1,pr40))
+
+z41 = 42 + cos(beta1 + beta2) * sin(beta3) * log(beta4) + exp(beta5)+ rnorm(n)
+pr41 = 1 / (1 + exp(-z41))
+y41 = (rbinom(n,1,pr41))
+
+z42 = 43 + log(beta1) * cos(beta2) * sin(beta3) + exp(beta4 + beta5)+ rnorm(n)
+pr42 = 1 / (1 + exp(-z42))
+y42 = (rbinom(n,1,pr42))
+
+z43 = 44 + sin(beta1) * log(beta2) * cos(beta3) + exp(beta4 * beta5)+ rnorm(n)
+pr43 = 1 / (1 + exp(-z43))
+y43 = (rbinom(n,1,pr43))
+
+z44 = 45 + cos(beta1) * sin(beta2) * log(beta3) + exp(beta4 / beta5)+ rnorm(n)
+pr44 = 1 / (1 + exp(-z44))
+y44 = (rbinom(n,1,pr44))
+
+z45 = 46 + log(beta1 + beta2) * cos(beta3) * sin(beta4) + exp(beta5)+ rnorm(n)
+pr45 = 1 / (1 + exp(-z45))
+y45 = (rbinom(n,1,pr45))
+
+z46 = 47 + sin(beta1) * log(beta2) * cos(beta3) + exp(beta4 - beta5)+ rnorm(n)
+pr46 = 1 / (1 + exp(-z46))
+y46 = (rbinom(n,1,pr46))
+
+z47 = 48 + cos(beta1) * sin(beta2) * log(beta3) + exp(beta4 + beta5)+ rnorm(n)
+pr47 = 1 / (1 + exp(-z47))
+y47 = (rbinom(n,1,pr47))
+
+z48 = 49 + log(beta1) * cos(beta2) * sin(beta3) + exp(beta4 - beta5)+ rnorm(n)
+pr48 = 1 / (1 + exp(-z48))
+y48 = (rbinom(n,1,pr48))
+
+z49 = 50 + sin(beta1) * log(beta2) * cos(beta3) + exp(beta4 * beta5)+ rnorm(n)
+pr49 = 1 / (1 + exp(-z49))
+y49 = (rbinom(n,1,pr49))
+
+z50 = 51 + cos(beta1) * sin(beta2) * log(beta3) + exp(beta4 / beta5) + rnorm(n)
+pr50 = 1 / (1 + exp(-z50))
+y50 = (rbinom(n,1,pr50))
+
+```
+
+Now let's put this into a dataset
+
+```{r}
+df.y = data.frame(y1,y2,y3,y4,y5,y6,y7,y8,y9,y10,y11,y12,y13,y14,y15,y16,y17,y18,y19,y20,y21,y22,y23,y24,y25,y26,y27,y28,y29,y30,y31,y32,y33,y34,y35,y36,y37,y38,y39,y40,y41,y42,y43,y44,y45,y46,y47,y48,y49,y50)
+
+```
+
+```{r}
+summary(y20)
+```
+Now I will set all NAs to zero since they are underrepresented in the data
+
+```{r}
+df.y[is.na(df.y)] <- 0
+```
+
+
+```{r}
+summary(df.y$y20)
+```
+
+
+```{r}
+
+df <- as.data.frame(cbind(y = df.y[,12], X))
+
+
+m2.glm <- glm(y~., data = df,family="binomial")
+
+confusion_matrix(m2.glm)
+1-(cm[1, 1]/cm[1, 3])
+1-(cm[2, 2]/cm[2, 3])
+
+```
+
+```{r}
+require(rJava)
+options(java.parameters = "-Xmx50g")     # or 8g, or larger than this, ...
+require(bartMachine)
+set_bart_machine_num_cores(8)
+```
+
+```{r}
+df$y <- as.factor(df$y)
+# df <- data.frame(df)
+class(df)
+# bm2 <- bartMachineCV(Xy = df)
+# bm <- bartMachine(y = as.data.frame(df$y), X = as.data.frame(X))
+
+bm <- bartMachine(y = as.factor(df.y[,12]), X = as.data.frame(X))
+```
+
+```{r}
+bm
+
+```
+
+```{r}
+# BartModelErrors <- as.data.frame(cbind(Actual0 = bm[["confusion_matrix"]][["model errors"]][1],
+#                                        Actual1 = bm[["confusion_matrix"]][["model errors"]][2],
+#                                        Total = bm[["confusion_matrix"]][["model errors"]][3]))
+
+BartModelErrors <- as.data.frame(cbind(Actual0 = NA,
+                                       Actual1 = NA,
+                                       Total = NA))
+
+```
+
+```{r}
+# rbind(BartModelErrors, BartModelErrors)
+```
+
+## Generating A bunch of Bart Models
+
+```{r}
+
+
+for (i in 1:length(colnames(df.y))) {
+  
+  y <- as.factor(df.y[,i])
+
+  
+  bm <- bartMachine(y = y, X = as.data.frame(X))
+    cf <- as.data.frame(cbind(Actual0 = bm[["confusion_matrix"]][["model errors"]][1],
+                                       Actual1 = bm[["confusion_matrix"]][["model errors"]][2],
+                                       Total = bm[["confusion_matrix"]][["model errors"]][3]))
+BartModelErrors <- rbind(BartModelErrors, cf)
+}
+
+```
+
+```{r}
+BartModelErrors <- na.omit(BartModelErrors)
+
+mean(BartModelErrors$Actual0)
+mean(BartModelErrors$Actual1)
+mean(BartModelErrors$Total)
+```
+## Logit Model Use errors
+
+```{r}
+df <- as.data.frame(cbind(y = df.y[,12], X))
+
+m2.glm <- glm(y~., data = df,family="binomial")
+
+confusion_matrix(m2.glm)
+cm[1, 2]/cm[1, 3]
+cm[2, 1]/cm[2, 3]
+((cm[2, 1])+(cm[2, 1]))/cm[3,3]
+```
+
+```{r}
+LogitModelErrors <- as.data.frame(cbind(Actual0 = NA,
+                                       Actual1 = NA,
+                                       Total = NA))
+```
+
+```{r}
+
+for (i in 1:length(colnames(df.y))) {
+  
+  df <- as.data.frame(cbind(y = df.y[,i], X))
+  m.glm <- glm(y~., data = df,family="binomial")
+  
+ cm <- confusion_matrix(m.glm)
+ cm[1, 2]/cm[1, 3]
+ cm[2, 1]/cm[2, 3]
+((cm[2, 1])+(cm[2, 1]))/cm[3,3]
+ 
+ 
+ cf <- as.data.frame(cbind(Actual0 = cm[1, 2]/cm[1, 3],
+                                       Actual1 = cm[2, 1]/cm[2, 3],
+                                       Total = ((cm[2, 1])+(cm[2, 1]))/cm[3,3]))
+ 
+ 
+LogitModelErrors <- rbind(LogitModelErrors, cf)
+}
+```
+
+```{r}
+LogitModelErrors <- na.omit(LogitModelErrors)
+
+mean(LogitModelErrors$Actual0)
+mean(LogitModelErrors$Actual1)
+mean(LogitModelErrors$Total)
+```
+
+```{r}
+mean(LogitModelErrors$Total)
+mean(BartModelErrors$Total)
+```
+

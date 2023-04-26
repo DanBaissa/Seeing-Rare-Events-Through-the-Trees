@@ -54,7 +54,9 @@ library(neuralnet)
 
 
 require(rJava)
-options(java.parameters = "-Xmx50g")     # or 8g, or larger than this, ...
+# options(java.parameters = "-Xmx50g")     # or 8g, or larger than this, ...
+
+options(java.parameters = "-Xmx8g")     # or 8g, or larger than this, ...
 require(bartMachine)
 set_bart_machine_num_cores(30)
 ```
@@ -91,6 +93,11 @@ df <- data.frame(y=y,x1=x1,x2=x2)
 
 ```
 
+```{r}
+sum(as.numeric(y)-1)/1000
+```
+
+
 ## Logit
 
 Let's test the Logit Model
@@ -107,7 +114,10 @@ No surprises here. the Logit is more or less accurite. Now let's look at the Log
 To measure the accuracy of a model we can use a Confusion Matrix. Basically this tells us how many predictions were correct and how many were false.
 
 ```{r}
-confusion_matrix(m1.glm)
+cm <- confusion_matrix(m1.glm)
+cm
+cm[1,2]/(sum(cm[1,1], cm[1,2]))
+cm[2,1]/(sum(cm[2,1], cm[2,2]))
 ```
 
 In this Logit, we predicted 0 correctly 549 times and predicted 0 118 times when the true answer was 1. On the other side we predicted 1 correctly 249 times and predicted a 1 when the true answer was 0 84 times.
@@ -115,9 +125,9 @@ In this Logit, we predicted 0 correctly 549 times and predicted 0 118 times when
 Remember, this is an ideal case with no iterations and an n of 1000. The model was correct `r 118 + 84` times or `r (1-((118 + 84)/1000)) * 100`% of the time.
 
 ```{r}
-df$y <- as.numeric(df$y)-1
-m1.re <-relogit(y~x1+x2,data=df)
-confusion_matrix(m1.re)
+# df$y <- as.numeric(df$y)-1
+# m1.re <-relogit(y~x1+x2,data=df)
+# confusion_matrix(m1.re)
 ```
 
 
@@ -128,6 +138,7 @@ Here we will use the BART-CV model which builds a model by cross-validating over
 ```{r results = FALSE}
 df$y <- as.factor(df$y)
 bm <- bartMachineCV(Xy = df)
+
 ```
 
 The hyperparameters selected by this BART-CV method are k = `r bm$k` and the number of trees = `r bm$num_trees`
@@ -139,6 +150,11 @@ Confusion Matrix for the BART model
 
 ```{r}
 bm$confusion_matrix
+
+
+bm$confusion_matrix[1,2]/(sum(bm$confusion_matrix[1,1], bm$confusion_matrix[1,2]))
+bm$confusion_matrix[2,1]/(sum(bm$confusion_matrix[2,1], bm$confusion_matrix[2,2]))
+
 ```
 
 Here we can see a slight improvement from the Logistic Regression. 
