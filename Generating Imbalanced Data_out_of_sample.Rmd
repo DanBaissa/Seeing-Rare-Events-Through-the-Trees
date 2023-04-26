@@ -483,6 +483,7 @@ true_values <- as.factor(df.y1[,1])
 # Generate predictions for the testing set
 predictions_prob <- predict(bm, new_data = df_test, type = "prob")
 # Since you have probabilities, convert them into binary (0 or 1) using a threshold (e.g., 0.5)
+#Note BARTmachine is defaulting to 0 as the target level and so we will need to use  < instead of > for the prediction probability
 threshold <- 0.5
 binary_predictions <- ifelse(predictions_prob < threshold, 1, 0)
 
