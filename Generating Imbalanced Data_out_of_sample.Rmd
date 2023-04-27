@@ -230,152 +230,151 @@ y1 = rbinom(n/2, 1, pr1[1:(n/2)])
 y1.1 = rbinom(n/2, 1, pr1[((n/2)+1):n])
 
 y2 = rbinom(n/2, 1, pr2[1:(n/2)])
-y2.1 = rbinom(n/2, 1, pr2[(n/2):n])
+y2.1 = rbinom(n/2, 1, pr2[((n/2)+1):n])
 
 y3 = rbinom(n/2, 1, pr3[1:(n/2)])
-y3.1 = rbinom(n/2, 1, pr3[(n/2):n])
+y3.1 = rbinom(n/2, 1, pr3[((n/2)+1):n])
 
 y4 = rbinom(n/2, 1, pr4[1:(n/2)])
-y4.1 = rbinom(n/2, 1, pr4[(n/2):n])
+y4.1 = rbinom(n/2, 1, pr4[((n/2)+1):n])
 
 y5 = rbinom(n/2, 1, pr5[1:(n/2)])
-y5.1 = rbinom(n/2, 1, pr5[(n/2):n])
+y5.1 = rbinom(n/2, 1, pr5[((n/2)+1):n])
 
 y6 = rbinom(n/2, 1, pr6[1:(n/2)])
-y6.1 = rbinom(n/2, 1, pr6[(n/2):n])
+y6.1 = rbinom(n/2, 1, pr6[((n/2)+1):n])
 
 y7 = rbinom(n/2, 1, pr7[1:(n/2)])
-y7.1 = rbinom(n/2, 1, pr7[(n/2):n])
+y7.1 = rbinom(n/2, 1, pr7[((n/2)+1):n])
 
 y8 = rbinom(n/2, 1, pr8[1:(n/2)])
-y8.1 = rbinom(n/2, 1, pr8[(n/2):n])
+y8.1 = rbinom(n/2, 1, pr8[((n/2)+1):n])
 
 y9 = rbinom(n/2, 1, pr9[1:(n/2)])
-y9.1 = rbinom(n/2, 1, pr9[(n/2):n])
+y9.1 = rbinom(n/2, 1, pr9[((n/2)+1):n])
 
 y10 = rbinom(n/2, 1, pr10[1:(n/2)])
-y10.1 = rbinom(n/2, 1, pr10[(n/2):n])
+y10.1 = rbinom(n/2, 1, pr10[((n/2)+1):n])
 
 y11 = rbinom(n/2, 1, pr11[1:(n/2)])
-y11.1 = rbinom(n/2, 1, pr11[(n/2):n])
+y11.1 = rbinom(n/2, 1, pr11[((n/2)+1):n])
 
 y12 = rbinom(n/2, 1, pr12[1:(n/2)])
-y12.1 = rbinom(n/2, 1, pr12[(n/2):n])
+y12.1 = rbinom(n/2, 1, pr12[((n/2)+1):n])
 
 y13 = rbinom(n/2, 1, pr13[1:(n/2)])
-y13.1 = rbinom(n/2, 1, pr13[(n/2):n])
+y13.1 = rbinom(n/2, 1, pr13[((n/2)+1):n])
 
 y14 = rbinom(n/2, 1, pr14[1:(n/2)])
-y14.1 = rbinom(n/2, 1, pr14[(n/2):n])
+y14.1 = rbinom(n/2, 1, pr14[((n/2)+1):n])
 
 y15 = rbinom(n/2, 1, pr15[1:(n/2)])
-y15.1 = rbinom(n/2, 1, pr15[(n/2):n])
+y15.1 = rbinom(n/2, 1, pr15[((n/2)+1):n])
 
 y16 = rbinom(n/2, 1, pr16[1:(n/2)])
-y16.1 = rbinom(n/2, 1, pr16[(n/2):n])
+y16.1 = rbinom(n/2, 1, pr16[((n/2)+1):n])
 
 y17 = rbinom(n/2, 1, pr17[1:(n/2)])
-y17.1 = rbinom(n/2, 1, pr17[(n/2):n])
+y17.1 = rbinom(n/2, 1, pr17[((n/2)+1):n])
 
 y18 = rbinom(n/2, 1, pr18[1:(n/2)])
-y18.1 = rbinom(n/2, 1, pr18[(n/2):n])
+y18.1 = rbinom(n/2, 1, pr18[((n/2)+1):n])
 
 y19 = rbinom(n/2, 1, pr19[1:(n/2)])
-y19.1 = rbinom(n/2, 1, pr19[(n/2):n])
+y19.1 = rbinom(n/2, 1, pr19[((n/2)+1):n])
 
 y20 = rbinom(n/2, 1, pr20[1:(n/2)])
-y20.1 = rbinom(n/2, 1, pr20[(n/2):n])
+y20.1 = rbinom(n/2, 1, pr20[((n/2)+1):n])
 
 y21 = rbinom(n/2, 1, pr21[1:(n/2)])
-y21.1 = rbinom(n/2, 1, pr21[(n/2):n])
+y21.1 = rbinom(n/2, 1, pr21[((n/2)+1):n])
 
 y22 = rbinom(n/2, 1, pr22[1:(n/2)])
-y22.1 = rbinom(n/2, 1, pr22[(n/2):n])
+y22.1 = rbinom(n/2, 1, pr22[((n/2)+1):n])
 
 y23 = rbinom(n/2, 1, pr23[1:(n/2)])
-y23.1 = rbinom(n/2, 1, pr23[(n/2):n])
+y23.1 = rbinom(n/2, 1, pr23[((n/2)+1):n])
 
 y24 = rbinom(n/2, 1, pr24[1:(n/2)])
-y24.1 = rbinom(n/2, 1, pr24[(n/2):n])
+y24.1 = rbinom(n/2, 1, pr24[((n/2)+1):n])
 
 y25 = rbinom(n/2, 1, pr25[1:(n/2)])
-y25.1 = rbinom(n/2, 1, pr25[(n/2):n])
+y25.1 = rbinom(n/2, 1, pr25[((n/2)+1):n])
 
 y26 = rbinom(n/2, 1, pr26[1:(n/2)])
-y26.1 = rbinom(n/2, 1, pr26[(n/2):n])
+y26.1 = rbinom(n/2, 1, pr26[((n/2)+1):n])
 
 y27 = rbinom(n/2, 1, pr27[1:(n/2)])
-y27.1 = rbinom(n/2, 1, pr27[(n/2):n])
+y27.1 = rbinom(n/2, 1, pr27[((n/2)+1):n])
 
 y28 = rbinom(n/2, 1, pr28[1:(n/2)])
-y28.1 = rbinom(n/2, 1, pr28[(n/2):n])
+y28.1 = rbinom(n/2, 1, pr28[((n/2)+1):n])
 
 y29 = rbinom(n/2, 1, pr29[1:(n/2)])
-y29.1 = rbinom(n/2, 1, pr29[(n/2):n])
+y29.1 = rbinom(n/2, 1, pr29[((n/2)+1):n])
 
 y30 = rbinom(n/2, 1, pr30[1:(n/2)])
-y30.1 = rbinom(n/2, 1, pr30[(n/2):n])
+y30.1 = rbinom(n/2, 1, pr30[((n/2)+1):n])
 
 y31 = rbinom(n/2, 1, pr31[1:(n/2)])
-y31.1 = rbinom(n/2, 1, pr31[(n/2):n])
+y31.1 = rbinom(n/2, 1, pr31[((n/2)+1):n])
 
 y32 = rbinom(n/2, 1, pr32[1:(n/2)])
-y32.1 = rbinom(n/2, 1, pr32[(n/2):n])
+y32.1 = rbinom(n/2, 1, pr32[((n/2)+1):n])
 
 y33 = rbinom(n/2, 1, pr33[1:(n/2)])
-y33.1 = rbinom(n/2, 1, pr33[(n/2):n])
+y33.1 = rbinom(n/2, 1, pr33[((n/2)+1):n])
 
 y34 = rbinom(n/2, 1, pr34[1:(n/2)])
-y34.1 = rbinom(n/2, 1, pr34[(n/2):n])
+y34.1 = rbinom(n/2, 1, pr34[((n/2)+1):n])
 
 y35 = rbinom(n/2, 1, pr35[1:(n/2)])
-y35.1 = rbinom(n/2, 1, pr35[(n/2):n])
+y35.1 = rbinom(n/2, 1, pr35[((n/2)+1):n])
 
 y36 = rbinom(n/2, 1, pr36[1:(n/2)])
-y36.1 = rbinom(n/2, 1, pr36[(n/2):n])
+y36.1 = rbinom(n/2, 1, pr36[((n/2)+1):n])
 
 y37 = rbinom(n/2, 1, pr37[1:(n/2)])
-y37.1 = rbinom(n/2, 1, pr37[(n/2):n])
+y37.1 = rbinom(n/2, 1, pr37[((n/2)+1):n])
 
 y38 = rbinom(n/2, 1, pr38[1:(n/2)])
-y38.1 = rbinom(n/2, 1, pr38[(n/2):n])
+y38.1 = rbinom(n/2, 1, pr38[((n/2)+1):n])
 
 y39 = rbinom(n/2, 1, pr39[1:(n/2)])
-y39.1 = rbinom(n/2, 1, pr39[(n/2):n])
+y39.1 = rbinom(n/2, 1, pr39[((n/2)+1):n])
 
 y40 = rbinom(n/2, 1, pr40[1:(n/2)])
-y40.1 = rbinom(n/2, 1, pr40[(n/2):n])
+y40.1 = rbinom(n/2, 1, pr40[((n/2)+1):n])
 
 y41 = rbinom(n/2, 1, pr41[1:(n/2)])
-y41.1 = rbinom(n/2, 1, pr41[(n/2):n])
+y41.1 = rbinom(n/2, 1, pr41[((n/2)+1):n])
 
 y42 = rbinom(n/2, 1, pr42[1:(n/2)])
-y42.1 = rbinom(n/2, 1, pr42[(n/2):n])
+y42.1 = rbinom(n/2, 1, pr42[((n/2)+1):n])
 
 y43 = rbinom(n/2, 1, pr43[1:(n/2)])
-y43.1 = rbinom(n/2, 1, pr43[(n/2):n])
+y43.1 = rbinom(n/2, 1, pr43[((n/2)+1):n])
 
 y44 = rbinom(n/2, 1, pr44[1:(n/2)])
-y44.1 = rbinom(n/2, 1, pr44[(n/2):n])
+y44.1 = rbinom(n/2, 1, pr44[((n/2)+1):n])
 
 y45 = rbinom(n/2, 1, pr45[1:(n/2)])
-y45.1 = rbinom(n/2, 1, pr45[(n/2):n])
+y45.1 = rbinom(n/2, 1, pr45[((n/2)+1):n])
 
 y46 = rbinom(n/2, 1, pr46[1:(n/2)])
-y46.1 = rbinom(n/2, 1, pr46[(n/2):n])
+y46.1 = rbinom(n/2, 1, pr46[((n/2)+1):n])
 
 y47 = rbinom(n/2, 1, pr47[1:(n/2)])
-y47.1 = rbinom(n/2, 1, pr47[(n/2):n])
+y47.1 = rbinom(n/2, 1, pr47[((n/2)+1):n])
 
 y48 = rbinom(n/2, 1, pr48[1:(n/2)])
-y48.1 = rbinom(n/2, 1, pr48[(n/2):n])
+y48.1 = rbinom(n/2, 1, pr48[((n/2)+1):n])
 
 y49 = rbinom(n/2, 1, pr49[1:(n/2)])
-y49.1 = rbinom(n/2, 1, pr49[(n/2):n])
+y49.1 = rbinom(n/2, 1, pr49[((n/2)+1):n])
 
 y50 = rbinom(n/2, 1, pr50[1:(n/2)])
-y50.1 = rbinom(n/2, 1, pr50[(n/2):n])
-
+y50.1 = rbinom(n/2, 1, pr50[((n/2)+1):n])
 
 
 
@@ -471,6 +470,8 @@ bm <- bartMachine(y = as.factor(df.y[,1]), X = as.data.frame(X[1:(n/2),]))
 bm
 ```
 
+
+
 ```{r}
 
 # Train the bartMachine model
@@ -492,6 +493,14 @@ accuracy <- mean(binary_predictions == true_values)
 cat("Out-of-sample accuracy:", accuracy, "\n")
 
 ```
+## Naive estimator
+
+```{r}
+nai <- rbinom(1000,1,.5)
+
+accuracy_nai <- mean(nai == true_values)
+cat("Out-of-sample accuracy:", accuracy_nai, "\n")
+```
 
 
 ```{r}
@@ -501,13 +510,59 @@ cat("Out-of-sample accuracy:", accuracy, "\n")
 
 BartModelErrors <- as.data.frame(cbind(Actual0 = NA,
                                        Actual1 = NA,
-                                       Total = NA))
+                                       Total = NA,
+                                       Outofsampleerror = NA))
 
 ```
+
+
 
 ```{r}
-# rbind(BartModelErrors, BartModelErrors)
+BartModelErrors <- data.frame()
+
+n <- nrow(X) # Assuming X contains all predictor variables
+split_index <- n/2
+
+for (i in 1:length(colnames(df.y))) {
+  
+  y_train <- as.factor(df.y[,i])
+  
+  # Split the data into training and testing sets
+  X_train <- as.data.frame(X[1:split_index,])
+
+  X_test <- as.data.frame(X[(split_index+1):n,])
+  y_test <- as.factor(df.y1[,i])
+  
+  # Train the bartMachine model
+  bm <- bartMachine(y = y_train, X = X_train)
+  
+  # Get the in-sample confusion matrix
+  in_sample_confusion_matrix <- bm[["confusion_matrix"]]
+  
+  # Generate predictions for the testing set
+  predictions_prob <- predict(bm, new_data = X_test, type = "prob")
+  
+  # Convert predictions into binary (0 or 1) using a threshold (e.g., 0.5)
+  threshold <- 0.5
+  binary_predictions <- ifelse(predictions_prob < threshold, 1, 0)
+  
+  # Calculate the out-of-sample prediction rate
+accuracy <- mean(binary_predictions == y_test)
+  
+  cf <- as.data.frame(cbind(Actual0 = bm[["confusion_matrix"]][["model errors"]][1],
+                                       Actual1 = bm[["confusion_matrix"]][["model errors"]][2],
+                                       Total = bm[["confusion_matrix"]][["model errors"]][3],
+                            Outofsampleerror = (1-accuracy)))
+BartModelErrors <- rbind(BartModelErrors, cf)
+  
+}
+
+
+# Print the aggregated model errors
+print(BartModelErrors)
+
 ```
+
 
 ## Generating A bunch of Bart Models
 
