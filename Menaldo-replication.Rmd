@@ -112,9 +112,6 @@ mdata <- cbind(est = m$bart_avg_predictions_by_quantile, lci95= m$bart_avg_predi
  
 mdata<- as.data.frame(mdata)
 
-m <- pd_plot(bm, "Monarchy", lower_ci = 0.05, upper_ci = 0.95)
-
-mdata <- cbind(mdata, lci90 = m$bart_avg_predictions_lower, uci90 = m$bart_avg_predictions_upper)
 
 ```
 
@@ -130,11 +127,65 @@ pdf(file = "Partial_effect_Monarchy.pdf",   # The directory you want to save the
 ggplot(mdata, aes(x = factor(Monarchy, levels = c(0, 1)), y = est)) +
   geom_point() +
   geom_errorbar(aes(ymin = lci95, ymax = uci95), width = 0.2) +
-  # geom_errorbar(aes(ymin = lci90, ymax = uci90), width = 0.2, alpha = 0.5) +
   geom_hline(yintercept = mdata$uci95[1], linetype = "dashed", color = "grey") +
   labs(x = "", y = "Partial Effect (Probits)") +
   scale_x_discrete(labels = c("0 = Not Monarchy", "1 = Monarchy")) +
   theme_minimal()
 dev.off()
+```
+
+```{r}
+X <- d
+X$y <- NULL
+
+plots_data<-c()
+
+# Extract variable names
+variable_names <- colnames(X)
+
+for (i in 1:length(variable_names)) {
+  
+  # Create the PD plot for the current variable
+  pd_plot_obj <- pd_plot(bm, variable_names[i])
+  
+  temp <- cbind(est = pd_plot_obj$bart_avg_predictions_by_quantile, 
+                lci95= pd_plot_obj$bart_avg_predictions_lower, 
+                uci95= pd_plot_obj$bart_avg_predictions_upper
+               )
+  temp <- cbind(as.data.frame(temp),  variable = variable_names[i])
+
+  
+  plots_data <- rbind(plots_data, temp)
+
+}
+
+```
+
+```{r}
+
+for (i in 1:length(variable_names)) {
+  
+pd <- plots_data |> 
+  filter(variable == variable_names[i])
+
+# Create ggplot with facets
+plot <- ggplot(pd) +
+  geom_line(aes(x = 1:length(est), y = est)) +
+  geom_line(aes(x = 1:length(est), y = lci95), color = "grey") +
+  geom_line(aes(x = 1:length(est), y = uci95), color = "grey") +
+  theme_minimal() +
+  labs(x = "", y = "Partial Effect (Probits)", title = variable_names[i])
+
+pdf(file = paste0(variable_names[i], ".pdf"),   # The directory you want to save the file in
+    width = 6, # The width of the plot in inches
+    height = 4) # The height of the plot in inches
+
+# Print the plot
+print(plot)
+dev.off()
+
+}
+
+
 ```
 
