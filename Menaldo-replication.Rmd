@@ -1,0 +1,140 @@
+---
+title: "Menaldo Replication"
+author: "Daniel K Baissa"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+library(regclass)
+
+
+require(rJava)
+options(java.parameters = "-Xmx50g")     # or 8g, or larger than this, ...
+require(bartMachine)
+set_bart_machine_num_cores(30)
+```
+
+
+# Retreave the data
+
+```{r}
+d <- read_csv("Menaldo_replication/MENA_DATA.csv")
+```
+
+
+```{r}
+
+d <- d |> 
+  select(revolutions_binary, monarch_2, log_population, PCI, TFI, ef, fullregime_dummy, logarithmic_growth_imp, fullregime_dummy, log_area, percent_muslim_menaldo, persian_gulf, yearorth1, yearorth2, yearorth3, year, region_world_2_2010_b) |> filter(year > 1949) |> 
+  filter(year< 2007) |> 
+  filter(region_world_2_2010_b == 3) |> 
+  select(-c(year, region_world_2_2010_b)) |> 
+  rename(y = revolutions_binary) |> 
+  mutate(y = as.factor(y)) |> 
+  rename(Monarchy = monarch_2) 
+
+# |> 
+#   mutate(Monarchy = as.factor(Monarchy))
+
+
+d <- na.omit(d)
+
+```
+
+```{r}
+pdf(file = "revoluationary_attempts_freq.pdf",   # The directory you want to save the file in
+    width = 6, # The width of the plot in inches
+    height = 4) # The height of the plot in inches
+d |> 
+  ggplot(aes(x = y))+
+  geom_bar() +
+  labs(x = "Revolutionary Attempts", y = "Count") +
+  theme_minimal()
+
+dev.off()
+```
+
+
+
+```{r}
+m1.glm <- glm(y~., data = d, family = binomial())
+m2.glm <- glm(y~., data = d, family = binomial(link = "probit"))
+
+summary(m1.glm)
+summary(m2.glm)
+
+cm <- confusion_matrix(m2.glm)
+
+confusion_matrix(m1.glm)
+confusion_matrix(m2.glm)
+
+```
+
+```{r}
+library(stargazer)
+stargazer(m2.glm, m1.glm, type = "latex")
+```
+
+
+```{r}
+cm[1,2]/cm[1,3]
+cm[1,1]/cm[1,3]
+
+```
+
+
+
+```{r}
+
+
+X <- d
+
+bm <- bartMachineCV(Xy = d,  prob_rule_class = (1-mean(as.numeric(d$y)-1)))
+bm
+```
+
+
+
+```{r}
+m <- pd_plot(bm, "Monarchy")
+```
+
+
+```{r}
+mdata <- cbind(est = m$bart_avg_predictions_by_quantile, lci95= m$bart_avg_predictions_lower, uci95= m$bart_avg_predictions_upper, Monarchy = c(0,1))
+ 
+mdata<- as.data.frame(mdata)
+
+m <- pd_plot(bm, "Monarchy", lower_ci = 0.05, upper_ci = 0.95)
+
+mdata <- cbind(mdata, lci90 = m$bart_avg_predictions_lower, uci90 = m$bart_avg_predictions_upper)
+
+```
+
+
+
+
+```{r}
+
+pdf(file = "Partial_effect_Monarchy.pdf",   # The directory you want to save the file in
+    width = 6, # The width of the plot in inches
+    height = 4) # The height of the plot in inches
+
+ggplot(mdata, aes(x = factor(Monarchy, levels = c(0, 1)), y = est)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lci95, ymax = uci95), width = 0.2) +
+  # geom_errorbar(aes(ymin = lci90, ymax = uci90), width = 0.2, alpha = 0.5) +
+  geom_hline(yintercept = mdata$uci95[1], linetype = "dashed", color = "grey") +
+  labs(x = "", y = "Partial Effect (Probits)") +
+  scale_x_discrete(labels = c("0 = Not Monarchy", "1 = Monarchy")) +
+  theme_minimal()
+dev.off()
+```
+
